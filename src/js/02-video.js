@@ -3,9 +3,8 @@ const player = new Vimeo.Player(iframe);
 
 const throttle = require('lodash.throttle');
 
-const onPlay = function(event) {
-    localStorage.setItem("videoplayer-current-time", event.seconds);
-    console.log(event.seconds);
+const onPlay = function(e) {
+    localStorage.setItem("videoplayer-current-time", e.seconds);
     console.log(localStorage.getItem("videoplayer-current-time"));
 };
 
