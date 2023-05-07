@@ -1,6 +1,4 @@
-import throttle from 'lodash.throttle';
-
-const FEEDBACK_STORAGE = 'feedback-form-state';
+const throttle = require('lodash.throttle');
 
 const feedbackForm = document.querySelector('.feedback-form');
 const emailInput = feedbackForm.querySelector('[name="email"]');
@@ -8,8 +6,8 @@ const messageTextarea = feedbackForm.querySelector('[name="message"]');
 
 let feedback = {};
 
-emailInput.value = (JSON.parse(localStorage.getItem(FEEDBACK_STORAGE))).email;
-messageTextarea.value = (JSON.parse(localStorage.getItem(FEEDBACK_STORAGE))).message;
+emailInput.value = (JSON.parse(localStorage.getItem('feedback-form-state'))).email;
+messageTextarea.value = (JSON.parse(localStorage.getItem('feedback-form-state'))).message;
 
 feedback = {email: emailInput.value, message: messageTextarea.value,};
 
@@ -20,20 +18,15 @@ messageTextarea.addEventListener('input', throttledAddToLocalStorage);
 feedbackForm.addEventListener('submit', handleSubmitBtnPress);
 
 function addToLocalStorage(e) {
-    if (emailInput.value === '' && messageTextarea.value === '') {
-        localStorage.clear();
-        console.log(localStorage.getItem(FEEDBACK_STORAGE));
-    }
     feedback[e.target.name] = e.target.value;
-    localStorage.setItem(FEEDBACK_STORAGE, JSON.stringify(feedback));
+    localStorage.setItem('feedback-form-state', JSON.stringify(feedback));
 }
 
 function handleSubmitBtnPress(e) {
     e.preventDefault();
-    console.log("Submit result")
     console.log(feedback);
-    feedback = { email: null, message: null,};
+    feedback = { email: '', message: '',};
     emailInput.value = feedback.email;
     messageTextarea.value = feedback.message;
-    localStorage.setItem(FEEDBACK_STORAGE, JSON.stringify(feedback));
+    localStorage.setItem('feedback-form-state', JSON.stringify(feedback));
 }
