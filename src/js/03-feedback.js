@@ -5,9 +5,11 @@ const emailInput = feedbackForm.querySelector('[name="email"]');
 const messageTextarea = feedbackForm.querySelector('[name="message"]');
 
 let feedback = {};
+if (localStorage.getItem('feedback-form-state')) {
+    emailInput.value = (JSON.parse(localStorage.getItem('feedback-form-state'))).email;
+    messageTextarea.value = (JSON.parse(localStorage.getItem('feedback-form-state'))).message;
+}
 
-emailInput.value = (JSON.parse(localStorage.getItem('feedback-form-state'))).email;
-messageTextarea.value = (JSON.parse(localStorage.getItem('feedback-form-state'))).message;
 
 feedback = {email: emailInput.value, message: messageTextarea.value,};
 
