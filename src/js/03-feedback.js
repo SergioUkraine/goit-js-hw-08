@@ -15,11 +15,11 @@ if (getFromStorage) {
 
 const throttledAddToLocalStorage = throttle(addToLocalStorage, 500);
 
-emailInput.addEventListener('input', throttledAddToLocalStorage);
-messageInput.addEventListener('input', throttledAddToLocalStorage);
+feedbackForm.addEventListener('input', throttledAddToLocalStorage);
 feedbackForm.addEventListener('submit', handleSubmitBtnPress);
 
 function addToLocalStorage(e) {
+    if (e.target.name !== 'email' && e.target.name !== 'message') return;
     feedback[e.target.name] = e.target.value;
     localStorage.setItem('feedback-form-state', JSON.stringify(feedback));
 }
