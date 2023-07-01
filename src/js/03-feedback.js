@@ -1,9 +1,11 @@
 const throttle = require('lodash.throttle');
+const LS_FEEDACK = 'feedback-form-state';
 
 const feedbackForm = document.querySelector('.feedback-form');
 const emailInput = feedbackForm.querySelector('[name="email"]');
 const messageInput = feedbackForm.querySelector('[name="message"]');
-const getFromStorage = localStorage.getItem('feedback-form-state');
+const getFromStorage = localStorage.getItem(LS_FEEDACK);
+
 
 let feedback = {email: '', message: '',};
 
@@ -21,14 +23,15 @@ feedbackForm.addEventListener('submit', handleSubmitBtnPress);
 function addToLocalStorage(e) {
     if (e.target.name !== 'email' && e.target.name !== 'message') return;
     feedback[e.target.name] = e.target.value;
-    localStorage.setItem('feedback-form-state', JSON.stringify(feedback));
+    localStorage.setItem(LS_FEEDACK, JSON.stringify(feedback));
 }
 
 function handleSubmitBtnPress(e) {
     e.preventDefault();
+    if (!getFromStorage) return;
     console.log(feedback);
     feedback = { email: '', message: '',};
     emailInput.value = feedback.email;
     messageInput.value = feedback.message;
-    localStorage.clear();
+    localStorage.removeItem(LS_FEEDACK);
 }
